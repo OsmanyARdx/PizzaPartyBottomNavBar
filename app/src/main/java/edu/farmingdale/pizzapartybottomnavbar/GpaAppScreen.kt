@@ -35,28 +35,34 @@ fun GpaAppScreen() {
 
     Column(
         modifier = Modifier
-        ,verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .background(Color.Cyan),
+        verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         TextField(
             value = grade1,
             onValueChange = { grade1 = it },Modifier.padding(16.dp),
-            label = { Text("Course 1 Grade")}
+            label = { Text("Course 1 Grade")},
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
 
         TextField(
             value = grade2,
-            onValueChange = { grade2 = it },
+            onValueChange = { grade2 = it }, Modifier.padding(16.dp),
             label = { Text("Course 2 Grade") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
 
 
         TextField(
             value = grade3,
-            onValueChange = { grade3 = it },
+            onValueChange = { grade3 = it },Modifier.padding(16.dp),
             label = { Text("Course 3 Grade") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
 
