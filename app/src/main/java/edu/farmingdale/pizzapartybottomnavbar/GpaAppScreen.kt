@@ -19,6 +19,14 @@ import androidx.compose.ui.unit.dp
 
 // ToDo 5:  Add the GpaAppScreen composable button that clears the input fields when clicked
 
+fun calGPA(grade1: String, grade2: String, grade3: String): Double {
+    val g1 = grade1.toDouble()
+    val g2 = grade2.toDouble()
+    val g3 = grade3.toDouble()
+    return (g1 + g2 + g3) / 3
+
+}
+
 
 @Composable
 fun GpaAppScreen() {
@@ -30,18 +38,19 @@ fun GpaAppScreen() {
 
     // Declare variables for GPA result and background color
     var gpa by remember { mutableStateOf("") }
-    var backColor by remember { mutableStateOf(Color.White) }
+    var backColor by remember { mutableStateOf(Color.Cyan) }
     var btnLabel by remember { mutableStateOf("Calulate GPA") }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(Color.Cyan),
+            .background(backColor),
         verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        TextField(
+
+        OutlinedTextField(
             value = grade1,
             onValueChange = { grade1 = it },Modifier.padding(16.dp),
             label = { Text("Course 1 Grade")},
@@ -49,7 +58,7 @@ fun GpaAppScreen() {
         )
 
 
-        TextField(
+        OutlinedTextField(
             value = grade2,
             onValueChange = { grade2 = it }, Modifier.padding(16.dp),
             label = { Text("Course 2 Grade") },
@@ -58,7 +67,7 @@ fun GpaAppScreen() {
 
 
 
-        TextField(
+        OutlinedTextField(
             value = grade3,
             onValueChange = { grade3 = it },Modifier.padding(16.dp),
             label = { Text("Course 3 Grade") },
@@ -67,47 +76,51 @@ fun GpaAppScreen() {
 
 
         Button(onClick = {
-            if (btnLabel == "Compute GPA") {
-
                 val gpaVal = calGPA(grade1, grade2, grade3)
+                gpa = gpaVal.toString()
                 if (gpaVal != null) {
                     gpa = gpaVal.toString()
 
-                    // Change background color based on GPA
-                    backColor = when {
-                        gpaVal < 60 -> Color.Red
-                        gpaVal in 60.0..79.0 -> Color.Yellow
-                        else -> Color.Green
+                   // backColor = when {
+                    //    gpaVal < 60 -> Color.Red
+                    //    gpaVal in 60.0..79.0 -> Color.Yellow
+                    //    else -> Color.Green
+                   // }
+
+                    if(gpaVal < 60){
+                        backColor = Color(Color.Red.value)
+                    }else if(gpaVal >= 60 && gpaVal <= 79){
+                        backColor = Color(Color.Yellow.value)
+                    }else{
+                        backColor = Color(Color.Green.value)
                     }
-                    btnLabel = "Clear"
-                } else {
-                    gpa = "Invalid input"
                 }
-            } else {
-                // Reset all value to none
-                grade1 = ""
-                grade2 = ""
-                grade3 = ""
-                gpa = ""
-                backColor = Color.White
-                btnLabel = "Compute GPA"
-            }
         }, modifier = Modifier.padding(top = 56.dp)) {
             Text(btnLabel)
         }
 
 
-        if (gpa.isNotEmpty()) {
-            Text(text = "GPA: $gpa")
+        if (true) {
+            Text(
+                text = "GPA: " + gpa,
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.padding(top = 16.dp)
+            )
         }
 
+        Button(
+            onClick = {
+                grade1 = ""
+                grade2 = ""
+                grade3 = ""
+                gpa = ""
+                backColor = Color(Color.Cyan.value)
+            })
+        {
+
+        }
 
     }
 }
 
-
-fun calGPA(grade1: String, grade2: String, grade3: String): Double {
-    val grades = listOf(grade1.toDouble(), grade2.toDouble(), grade3.toDouble())
-    return grades.average()
-}
 
