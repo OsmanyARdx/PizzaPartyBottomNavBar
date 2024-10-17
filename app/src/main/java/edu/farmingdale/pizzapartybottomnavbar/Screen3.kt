@@ -32,18 +32,26 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Screen3() {
+
+
+    val gradientBrush = Brush.verticalGradient(
+        colors = listOf(Color(Color.Cyan.value), Color(Color.Gray.value))
+    )
     var sliderValue by remember { mutableStateOf(0.5f) }
     var chkd by remember { mutableStateOf(true) }
 
 
     val context = LocalContext.current
-    Column ( modifier = Modifier.padding(horizontal = 20.dp).fillMaxSize(),
+    Column ( modifier = Modifier.fillMaxSize().background(gradientBrush),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally){
         Slider(value = sliderValue, onValueChange = { sliderValue=it }, Modifier.fillMaxWidth()
             , enabled = chkd)
 
-        Text (fontSize = 20.sp, text = "Second Screen" )
+        Text(
+            fontSize = 20.sp,
+            text = "Slider Value: ${sliderValue.toString().take(4)}"
+        )
 
         Button(onClick = { val newInt = Intent(Intent.ACTION_VIEW)
             newInt.setData(Uri.parse("tel:6314202000"))
